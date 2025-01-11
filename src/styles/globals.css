@@ -1,0 +1,13 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+.page-break {
+    page-break-before: always;
+
+    /* For print styles */
+    height: 100vh;
+
+    /* Full viewport height */
+    display: block;
+}
