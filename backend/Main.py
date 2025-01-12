@@ -1,29 +1,35 @@
-from flask import Flask, jsonify,request
+from flask import Flask
 from flask_cors import CORS
-import logging
+from flask import request, jsonify
+from . import app
+import base64
+import io
+from PIL import Image
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app)
 
-# Set up logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-# Create a file handler
-file_handler = logging.FileHandler('app.log')
-file_handler.setLevel(logging.INFO)
-
-# Create a logging format
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-file_handler.setFormatter(formatter)
-
-# Add the file handler to the logger
-logger.addHandler(file_handler)
-
-@app.route('/')
+@app.route('/',methods=['GET'])
 def home():
-    return jsonify({'message': 'Welcome to SignLanguageAI'})
+    return "Hello World!"
+
+@app.route('/upload', methods=['POST'])
+def upload_image():
+    data = request.json
+
+    # Decode the base64 image
+    img_data = base64.b64decode(data['image'])
+    img = Image.open(io.BytesIO(img_data))
+
+    # Process the image with AI (replace with actual AI call)
+    result = dummy_ai_process(img)
+
+    return jsonify({"result": result}, 200)
+
+def dummy_ai_process(img):
+    # Placeholder for your AI model processing
+    return "AI processed result"
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True, port=5000)
