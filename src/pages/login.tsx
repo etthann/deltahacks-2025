@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
+import axios from 'axios'; // Import Axios
 import '../styles/globals.css';
+import router from 'next/router';
 
 const LoginPage: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(''); // To display any login errors
 
-
-    const handleLogin = (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle login logic here
 
-        
-
-
+        try {
+            const response = await axios.post('http://localhost:5000/login', { email, password });
+            if (response.status === 200) {
+                router.push('/');
+            }
+        } catch (err) {
+            setError('Login failed. Please check your email and password and try again.');
+            console.error(err);
+        }
     };
-
-
 
     return (
         <div className="flex h-screen w-screen items-center justify-center bg-gray-50">
@@ -52,6 +57,7 @@ const LoginPage: React.FC = () => {
                             required
                         />
                     </div>
+                    {error && <p className="text-red-500 text-sm">{error}</p>}
                     <div className="flex items-start mb-5">
                         <div className="flex items-center h-5">
                             <input
