@@ -2,7 +2,6 @@ import { useState } from 'react';
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import Image from 'next/image';
-import Link from 'next/link';
 import '../styles/globals.css';
 import axios from "axios";
 
@@ -10,21 +9,46 @@ const Upload: React.FC = () => {
     const [image, setImage] = useState<File | null>(null);
 
     const toBase64 = (file: File) =>
-        new Promise((resolve, reject) => {
+        new Promise<string>((resolve, reject) => {
             const reader = new FileReader();
             reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
+            reader.onload = () => resolve(reader.result as string);
             reader.onerror = (error) => reject(error);
         });
 
-    const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
             const selectedImage = event.target.files[0];
+            setImage(selectedImage);
 
-            const dataImage = toBase64(selectedImage);
-            
+            try {
+                const dataImage = await toBase64(selectedImage);
 
-
+                // Send the Base64 string to the backend
+                axios.post('http://localhost:5000/upload', { image: dataImage })
+                    .then(response => {
+                        console.log('Image uploaded successfully:', response.data);
+                    })
+                    .catch(error => {
+                        console.error('Error uploading image:', error);
+                        if (error.response) {
+                            // The request was made and the server responded with a status code
+                            // that falls out of the range of 2xx
+                            console.error('Response data:', error.response.data);
+                            console.error('Response status:', error.response.status);
+                            console.error('Response headers:', error.response.headers);
+                        } else if (error.request) {
+                            // The request was made but no response was received
+                            console.error('Request data:', error.request);
+                        } else {
+                            // Something happened in setting up the request that triggered an Error
+                            console.error('Error message:', error.message);
+                        }
+                        console.error('Error config:', error.config);
+                    });
+            } catch (error) {
+                console.error('Error converting image to Base64:', error);
+            }
         }
     };
 
@@ -93,9 +117,6 @@ const Upload: React.FC = () => {
 
             <br />
             <br />
-            <Link href="/" legacyBehavior>
-                <a className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-lg w-1/2 py-2.5 text-center me-2 mb-2">Home</a>
-            </Link>
             <Footer />
         </div>
     )
