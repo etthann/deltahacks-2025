@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
 import '../styles/globals.css';
 
-const LoginPage: React.FC = () => {
+const RegisterPage: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
 
-    const handleLogin = (e: React.FormEvent) => {
+    const handleRegister = (e: React.FormEvent) => {
         e.preventDefault();
         // Handle login logic here
 
-        
+
 
 
     };
-
-
 
     return (
         <div className="flex h-screen w-screen items-center justify-center bg-gray-50">
@@ -27,7 +25,7 @@ const LoginPage: React.FC = () => {
                     </p>
                 </div>
 
-                <form onSubmit={handleLogin} className="max-w-sm mx-auto px-4 py-6 sm:px-16">
+                <form onSubmit={handleRegister} className="max-w-sm mx-auto px-4 py-6 sm:px-16">
                     <div className="mb-5">
                         <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Your email</label>
                         <input
@@ -66,8 +64,8 @@ const LoginPage: React.FC = () => {
                         <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign In</button>
                     </div>
                     <div className='w-full flex flex-col items-center justify-center opacity-90'>
-                        <p>Don&apos;t have an account?</p>
-                        <a href='/register' className="underline">Sign Up Now</a>
+                        <p>Already have an account?</p>
+                        <a href='/login' className="underline">Sign In!</a>
                     </div>
                 </form>
             </div>
@@ -75,4 +73,4 @@ const LoginPage: React.FC = () => {
     );
 };
 
-export default LoginPage;
+export default RegisterPage;

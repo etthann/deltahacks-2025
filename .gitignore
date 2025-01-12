@@ -13,6 +13,14 @@
 # testing
 /coverage
 
+backend/app.log
+./backend/app.log
+/backend/app.log
+__pycache__
+backend/__pycache__
+./backend/__pycache__
+
+
 # next.js
 /.next/
 /out/
