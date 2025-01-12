@@ -1,6 +1,6 @@
 const Contact: React.FC = () => {
     return (
-        <div className="p-4 bg-white dark:bg-blue-9 00 w-full max-w-xl mx-auto rounded-lg shadow-lg">
+        <div className="p-4 bg-white dark:bg-blue-900 w-full max-w-xl mx-auto rounded-lg shadow-lg">
             <h5 className="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase dark:text-gray-400">
                 <svg className="w-4 h-4 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
                     <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z" />
