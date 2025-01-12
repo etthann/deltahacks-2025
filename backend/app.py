@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import base64
@@ -189,5 +190,4 @@ def dummy_ai_process(img):
 
 
 if __name__ == '__main__':
-    logger.info("Starting Flask app")
     app.run(debug=True, port=5000)

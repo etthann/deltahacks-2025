@@ -23,3 +23,17 @@ services:
             - node_modules/
         - action: rebuild
           path: package.json
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: flask-backend
+    ports:
+      - "5000:5000"
+    # environment:
+    #   - MONGO_URI=mongodb+srv://<username>:<password>@<cluster-url>/<dbname>?retryWrites=true&w=majority
+    command: flask run --host=0.0.0.0 --port=5000
+    volumes:
+      - ./backend:/app
+    # depends_on:
+    #   - mongodb-atlas
