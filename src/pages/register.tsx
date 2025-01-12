@@ -1,36 +1,43 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../styles/globals.css';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 
 const RegisterPage: React.FC = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [name, setName] = useState('');
+    const [name, setName] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    const [email, setEmail] = React.useState('');
+    const [confirmPassword, setConfirmPassword] = React.useState('');
     const router = useRouter();
 
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle login logic here
+        // Handle registration logic here
         try {
-            const response = await axios.post('http://localhost:5000/register', {
-                name,
-                email,
-                password,
+            const response = await fetch('http://localhost:5000/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: name,
+                    password: password,
+                    email: email,
+                    confirmPassword: confirmPassword,
+                }),
             });
-            
-            if (response.status === 200) {
+
+            if (response.ok) {
                 // Handle successful registration
                 console.log('Registration successful');
-                router.push('/');
+                router.push('/upload');
             } else {
                 // Handle registration error
-                console.error('Registration failed');
+                const errorData = await response.json();
+                console.error('Registration failed:', errorData);
             }
         } catch (error) {
-            console.error('An error occured during registration: ', error);
+            console.error('An error occurred during registration:', error);
         }
-
     };
 
     return (
@@ -45,10 +52,10 @@ const RegisterPage: React.FC = () => {
 
                 <form onSubmit={handleRegister} className="max-w-sm mx-auto px-4 py-6 sm:px-16">
                     <div className="mb-5">
-                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Your Full name</label>
+                        <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Your Full Name</label>
                         <input
                             type="text"
-                            id="text"
+                            id="name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -57,7 +64,7 @@ const RegisterPage: React.FC = () => {
                         />
                     </div>
                     <div className="mb-5">
-                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Your email</label>
+                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Your Email</label>
                         <input
                             type="email"
                             id="email"
@@ -69,12 +76,24 @@ const RegisterPage: React.FC = () => {
                         />
                     </div>
                     <div className="mb-5">
-                        <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Your password</label>
+                        <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Your Password</label>
                         <input
                             type="password"
                             id="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="password"
+                            required
+                        />
+                    </div>
+                    <div className="mb-5">
+                        <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Confirm Password</label>
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="password"
                             required
@@ -91,7 +110,7 @@ const RegisterPage: React.FC = () => {
                         <label htmlFor="remember" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember me</label>
                     </div>
                     <div className='items-center justify-center flex p-4'>
-                        <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign In</button>
+                        <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign Up</button>
                     </div>
                     <div className='w-full flex flex-col items-center justify-center opacity-90'>
                         <p>Already have an account?</p>

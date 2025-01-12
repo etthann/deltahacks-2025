@@ -19,7 +19,9 @@ backend/app.log
 __pycache__
 backend/__pycache__
 ./backend/__pycache__
-
+backend/model/data
+backend/__pycache__
+.venv/
 
 # next.js
 /.next/
