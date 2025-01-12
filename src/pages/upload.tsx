@@ -70,7 +70,12 @@ const Upload: React.FC = () => {
                     <div className='flex flex-row items-center justify-center w-1/2 h-auto py-10'>
                         <div className='flex flex-col h-auto w-3/4 items-center mx-10'>
                             <h1 className="text-3xl font-bold mb-4">Upload an Image</h1>
-                            <input type="file" onChange={handleImageUpload} className="mb-4" />
+
+                            <form className="max-w-lg mx-auto">
+                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="user_avatar">Upload file</label>
+                                <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help" id="user_avatar" type="file" />
+                                <div className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">A profile picture is useful to confirm your are logged into your account</div>
+                            </form>
                             {image && (
                                 <div className="flex flex-row items-start justify-center w-full max-w-6xl">
                                     {/* Uploaded Image */}

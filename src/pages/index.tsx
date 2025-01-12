@@ -29,7 +29,7 @@ const Home: React.FC = () => {
                         </div>
                     </div>
 
-                    <Link href="/upload" legacyBehavior>
+                    <Link href="/login" legacyBehavior>
                         <a className="bg-blue-700 hover:bg-blue-900 text-white max-w-xs w-full font-bold py-3 text-2x1 px-4 rounded mt-8">Login</a>
                     </Link>
                 </div>
